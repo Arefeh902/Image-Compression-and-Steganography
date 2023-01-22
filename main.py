@@ -4,17 +4,42 @@ import heapq
 import pickle
 
 # read an image
-image_url = "four.png"
+image_url = "4c.png"
 image = Image.open(image_url)
 array = np.array(image)
 
 # array = np.array([[(1, 2), (3, 4), (5, 6)], [(1, 2), (3, 4), (5, 6)], [(1, 2), (3, 4), (5, 6)]])
 
 
-# add secret message
+# read secret message
+f = open("secret_message.txt", "r")
+secret_message = f.read()
+f.close()
+
+print(secret_message)
+secret_message_bits = ''.join([bin(ord(c))[2:].zfill(8) for c in secret_message]) + '0'*8
+print(secret_message_bits)
+
+# encode secrete
+counter = 0
+flag = 0
+for row in range(array.shape[0]):
+    if flag == 1:
+        break
+    for col in range(array.shape[1]):
+        if flag == 1:
+           break
+        for dep in range(array.shape[2]):
+            tmp = array[row][col][dep]
+            tmp = int(bin(tmp)[2:-1] + secret_message_bits[counter], 2)
+            array[row][col][dep] = tmp
+            counter += 1
+            if counter == len(secret_message_bits):
+                flag = 1
+                break
 
 
-
+print(array[0])
 
 # initializing frequency table
 frequency_table = {}
