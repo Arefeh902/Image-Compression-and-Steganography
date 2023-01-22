@@ -10,7 +10,11 @@ array = np.array(image)
 
 # array = np.array([[(1, 2), (3, 4), (5, 6)], [(1, 2), (3, 4), (5, 6)], [(1, 2), (3, 4), (5, 6)]])
 
-print(array.shape)
+
+# add secret message
+
+
+
 
 # initializing frequency table
 frequency_table = {}
@@ -36,7 +40,7 @@ class Node():
 
     def __str__(self) -> str:
         return f'{self.symbol}: {self.freq}'
-    
+
     def __lt__(self, other) -> bool:
         return self.freq < other.freq
 
@@ -71,17 +75,14 @@ def traverse(n: Node, s: str):
     traverse(n.right, s+'1')
 
 traverse(root, '')
-height, width, deapth = array.shape
-print(array.shape)
-# put decode and dimensions into a ... file
-# with open("key.txt", 'w') as f:
-#     f.write(f'{height}X{width}\n')
-#     for key in decode:
-#         f.write(f'{key}:{decode[key]}\n')
+height, width, depth = array.shape
 
+
+# writing key to file
 with open("key.pickle", 'wb') as f:
     decode['height'] = height
     decode['width'] = width
+    decode['depth'] = depth
     pickle.dump(decode,f)
 
 
@@ -90,18 +91,17 @@ for row in range(array.shape[0]):
     for col in range(array.shape[1]):
         binary_string += decode[tuple(array[row][col])]
 
-print(decode)
+if len(binary_string) % 8 != 0:
+    binary_string += '0' * (len(binary_string) % 8)
 
-print(len(binary_string))
 
 bit_string = [binary_string[i:i+8] for i in range(0, len(binary_string), 8)]
-print(bit_string[-1])
 
-print(len(bit_string))
-f = open("compr.txt", "w")
-string = ''.join([chr(int(b, 2)) for b in bit_string])
-print(len(string))
-f.write(string)
+
+#f = open("compr.txt", "w")
+#string = ''.join([chr(int(b, 2)) for b in bit_string])
+#print(len(string))
+#f.write(string)
 
 
 fb = open("compr.bin", "wb")
@@ -114,7 +114,7 @@ fb.write(bytearray([int(b, 2) for b in bit_string]))
 #     height, width = line[0].split('X')
 
 # class Tri_Node:
-	
+
 # 	def __init__(self, left=None, right=None):
 # 		self.left = left
 # 		self.right = right
