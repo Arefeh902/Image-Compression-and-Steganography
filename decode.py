@@ -88,5 +88,32 @@ print(len(decoded_data))
 array = np.array(decoded_data)
 array = np.reshape(array, (height, width, depth))
 
+# decode the message
+secret_message = ''
+tmp_byte = ''
+counter = 0
+flag = 0
+for row in range(array.shape[0]):
+	if flag == 1:
+		break
+	for col in range(array.shape[1]):
+		if flag == 1:
+			break
+		for dep in range(array.shape[2]):
+			tmp = array[row][col][dep]
+			tmp = 0
+			tmp_byte.append(bin(tmp)[-1])
+			counter += 1
+			if counter % 8 == 0:
+				counter = 0
+				c = char(int(''.join(tmp_byte), 2))
+				if c == 0:
+					flag = 1
+					break
+				secret_message.append(c)
+
+print("secret:", secret_message)
+
+
 new_image = Image.fromarray(array)
 new_image.save('decoded.png')

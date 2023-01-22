@@ -18,7 +18,7 @@ f.close()
 
 print(secret_message)
 secret_message_bits = ''.join([bin(ord(c))[2:].zfill(8) for c in secret_message]) + '0'*8
-print(secret_message_bits)
+
 
 # encode secrete
 counter = 0
@@ -37,9 +37,7 @@ for row in range(array.shape[0]):
             if counter == len(secret_message_bits):
                 flag = 1
                 break
-
-
-print(array[0])
+print(array.shape)
 
 # initializing frequency table
 frequency_table = {}
@@ -116,8 +114,8 @@ for row in range(array.shape[0]):
     for col in range(array.shape[1]):
         binary_string += decode[tuple(array[row][col])]
 
-if len(binary_string) % 8 != 0:
-    binary_string += '0' * (len(binary_string) % 8)
+#if len(binary_string) % 8 != 0:
+#    binary_string += '0' * (len(binary_string) % 8)
 
 
 bit_string = [binary_string[i:i+8] for i in range(0, len(binary_string), 8)]
