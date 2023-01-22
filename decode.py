@@ -83,7 +83,7 @@ while i < len(data):
 			i -= 1
 	i += 1
 decoded_data.append(n.symbol)
-print(len(decoded_data))
+decoded_data = decoded_data[:height*width]
 
 array = np.array(decoded_data)
 array = np.reshape(array, (height, width, depth))
@@ -101,18 +101,18 @@ for row in range(array.shape[0]):
 			break
 		for dep in range(array.shape[2]):
 			tmp = array[row][col][dep]
-			tmp = 0
-			tmp_byte.append(bin(tmp)[-1])
+			tmp_byte += bin(tmp)[-1]
 			counter += 1
-			if counter % 8 == 0:
-				counter = 0
-				c = char(int(''.join(tmp_byte), 2))
-				if c == 0:
+			if counter == 8:
+				if tmp_byte == '0' * 8:
 					flag = 1
 					break
-				secret_message.append(c)
+				secret_message += chr(int(tmp_byte, 2))
+				print(tmp_byte)
+				counter = 0
+				tmp_byte = ''
 
-print("secret:", secret_message)
+print("secret:", secret_message[:50])
 
 
 new_image = Image.fromarray(array)
