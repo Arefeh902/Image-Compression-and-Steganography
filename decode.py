@@ -108,11 +108,10 @@ for row in range(array.shape[0]):
 					flag = 1
 					break
 				secret_message += chr(int(tmp_byte, 2))
-				print(tmp_byte)
 				counter = 0
 				tmp_byte = ''
 
-print("secret:", secret_message[:50])
+print("secret:", secret_message)
 
 
 new_image = Image.fromarray(array)

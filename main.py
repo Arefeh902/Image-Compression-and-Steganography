@@ -4,21 +4,18 @@ import heapq
 import pickle
 
 # read an image
-image_url = "4c.png"
+image_url = "photos/4c.png"
 image = Image.open(image_url)
 array = np.array(image)
 
 # array = np.array([[(1, 2), (3, 4), (5, 6)], [(1, 2), (3, 4), (5, 6)], [(1, 2), (3, 4), (5, 6)]])
-
 
 # read secret message
 f = open("secret_message.txt", "r")
 secret_message = f.read()
 f.close()
 
-print(secret_message)
 secret_message_bits = ''.join([bin(ord(c))[2:].zfill(8) for c in secret_message]) + '0' * 8
-print(secret_message_bits)
 
 # encode secrete
 counter = 0
@@ -37,8 +34,6 @@ for row in range(array.shape[0]):
             if counter == len(secret_message_bits):
                 flag = 1
                 break
-
-print(array.shape)
 
 # initializing frequency table
 frequency_table = {}
@@ -119,35 +114,8 @@ for row in range(array.shape[0]):
 if len(binary_string) % 8 != 0:
     binary_string += '0' * (len(binary_string) % 8)
 
-
-print(len(binary_string))
 bit_string = [binary_string[i:i+8] for i in range(0, len(binary_string), 8)]
-
-
-#f = open("compr.txt", "w")
-#string = ''.join([chr(int(b, 2)) for b in bit_string])
-#print(len(string))
-#f.write(string)
 
 
 fb = open("compr.bin", "wb")
 fb.write(bytearray([int(b, 2) for b in bit_string]))
-
-print(len(bit_string))
-# decoding back into png
-# decode
-# with open("key.txt", 'r') as f:
-#     line = f.readlines()
-#     height, width = line[0].split('X')
-
-# class Tri_Node:
-
-# 	def __init__(self, left=None, right=None):
-# 		self.left = left
-# 		self.right = right
-
-
-
-
-# new_image = Image.fromarray(array)
-# new_image.save('new.png')
